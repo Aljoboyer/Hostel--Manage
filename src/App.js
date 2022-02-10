@@ -8,6 +8,7 @@ import {
 import AdminHome from './Pages/Admin/AdminHome/AdminHome';
 import AddFood from './Pages/Admin/AddFood/AddFood';
 import Addstudent from './Pages/Admin/Addstudent/Addstudent';
+import Distribution from './Pages/Admin/Distribution/Distribution';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/" element={<AdminHome/>}>
                     <Route path="/" element={<AddFood/>}/>
                     <Route path="/Addstudent" element={<Addstudent/>}/>
+                    <Route path="/Distribution" element={<Distribution/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

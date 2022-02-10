@@ -12,8 +12,8 @@ const Addstudent = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const studentarray = [];
-    
+    const [studentarray, setStudentarray] = useState([]);
+    const [check, setCheck] = useState(false)
     const onBlurHandler = e => {
         const dataname = e.target.name;
         const datavalue = e.target.value;
@@ -129,9 +129,38 @@ const Addstudent = () => {
               )
         })
     }
+
     const CheckHandler = (item) => {
-        studentarray.push(item)
-        console.log(studentarray)
+        if(studentarray.includes(item))
+        {
+            return
+        }
+        
+        else{
+            setStudentarray([...studentarray, item])
+        }
+    
+        
+    }
+    const StatusChangeHandler = () => {
+        
+        fetch('http://localhost:5000/changeStatus',{
+          method: 'PUT',
+          headers: {
+              'content-type':'application/json'
+          },
+          body: JSON.stringify(studentarray)
+      })
+      .then(res => res.json())
+      .then(data =>  {
+          setDemo(students)
+        Swal.fire(
+            'Statuse Changed Succesfully',
+            '',
+            'success'
+          )
+          setStudentarray([])
+      })
     }
     return (
     <Row className='container-fluid'>
@@ -147,6 +176,7 @@ const Addstudent = () => {
                         <th>Status</th>
                         <th>DELETE</th>
                         <th>EDIT</th>
+                        <th>Change Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -161,17 +191,27 @@ const Addstudent = () => {
                             <td>{item.status}</td>
                             <td><button onClick={() => DeleteHanlder(item._id)} className='btn btn-danger text-light fw-bold'>DELETE</button></td>
                             <td><button onClick={() => EditHandler(item._id)} className='btn btn-warning text-dark fw-bold'>EDIT</button></td>
-                            <input onClick={() => CheckHandler(item)} type="checkbox" id="vehicle1" name="vehicle1" value={item} />
+                            <td className='text-center'>
+                                <input onClick={() => CheckHandler(item)} type="checkbox" id="checkbox" value={item} />
+                            </td>
+                            
                         </tr>)
                     }
                 </tbody>
             </Table>
-            <div className='mt-4'>
+            <div className='my-4'>
                     {
                     
                     [...Array(totalpage).keys()].map(number => <button onClick={() => setPageno(number)} className={number === pageno  ? 'btn btn-info mx-3' : 'btn btn-dark mx-3'} >Page {number}</button>)
                     }
             </div>
+            <Row className='d-flex justify-content-center mt-4'>
+               {
+                   studentarray.length > 0 ?  <Col className='mt-4 pt-4' lg={8}>
+                   <button onClick={StatusChangeHandler} style={{width: '100%'}} className='btn btn-success text-light fw-bold'>CHANGE STATUS</button>
+                    </Col>  : ''
+               }
+            </Row>
            </Col>
            <Col lg={4} className="addfood_colam my-4">
            <h4 className='fw-bold text-primary my-4 ms-4'>Add Students</h4>
