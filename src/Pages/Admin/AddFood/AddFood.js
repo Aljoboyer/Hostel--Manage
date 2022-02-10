@@ -35,7 +35,7 @@ const AddFood = () => {
     const SubmitHandler = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:5000/foodpost',{
+        fetch('https://powerful-plateau-64861.herokuapp.com/foodpost',{
           method: 'POST',
           headers: {
               'content-type':'application/json'
@@ -55,7 +55,7 @@ const AddFood = () => {
     }
 
     useEffect(() => {
-      fetch(`http://localhost:5000/getfooditem?page=${pageno}&&size=${size}`)
+      fetch(`https://powerful-plateau-64861.herokuapp.com/getfooditem?page=${pageno}&&size=${size}`)
       .then(res => res.json())
       .then(data =>{
           if(data)
@@ -79,7 +79,7 @@ const AddFood = () => {
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/deletefooditem/${id}`,{
+                fetch(`https://powerful-plateau-64861.herokuapp.com/deletefooditem/${id}`,{
                     method: 'DELETE'
                 })
                 .then(res => res.json())
@@ -100,7 +100,7 @@ const AddFood = () => {
     
     }
     const EditHandler = (id) => {
-        fetch(`http://localhost:5000/getEditItem/${id}`)
+        fetch(`https://powerful-plateau-64861.herokuapp.com/getEditItem/${id}`)
         .then(res => res.json())
         .then(data => {
             setEditItem(data);
@@ -112,7 +112,7 @@ const AddFood = () => {
         const id = editItem._id
         delete editItem['_id'];
 
-        fetch(`http://localhost:5000/putEditItem/${id}`,{
+        fetch(`https://powerful-plateau-64861.herokuapp.com/putEditItem/${id}`,{
             method: 'PUT',
             headers:{
                 'content-type':'application/json'
@@ -132,7 +132,8 @@ const AddFood = () => {
     } 
     return (
     <Row className='container-fluid justify-content-around'>
-        <Col lg={7} className="my-4">
+        <Col lg={7} className="mb-4">
+          <h4 className='fw-bold my-4 text-center'>All Food Manu</h4>
             <Table responsive striped bordered hover size="sm">
                 <thead>
                     <tr>

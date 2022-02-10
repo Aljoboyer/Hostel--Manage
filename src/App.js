@@ -13,6 +13,7 @@ import Distribution from './Pages/Admin/Distribution/Distribution';
 function App() {
   return (
     <div style={{width: '100%'}}>
+      <h1 className='website_title text-center'>Yooda Hostel</h1>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<AdminHome/>}>

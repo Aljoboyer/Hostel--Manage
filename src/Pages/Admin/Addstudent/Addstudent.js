@@ -34,7 +34,7 @@ const Addstudent = () => {
     }
 
      useEffect(() => {
-      fetch(`http://localhost:5000/getStudents?page=${pageno}&&size=${size}`)
+      fetch(`https://powerful-plateau-64861.herokuapp.com/getStudents?page=${pageno}&&size=${size}`)
       .then(res => res.json())
       .then(data =>{
           if(data)
@@ -49,7 +49,7 @@ const Addstudent = () => {
     const SubmitHandler = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:5000/studentpost',{
+        fetch('https://powerful-plateau-64861.herokuapp.com/studentpost',{
           method: 'POST',
           headers: {
               'content-type':'application/json'
@@ -78,7 +78,7 @@ const Addstudent = () => {
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/deleteStudent/${id}`,{
+                fetch(`https://powerful-plateau-64861.herokuapp.com/deleteStudent/${id}`,{
                     method: 'DELETE'
                 })
                 .then(res => res.json())
@@ -99,7 +99,7 @@ const Addstudent = () => {
     
     }
     const EditHandler = (id) => {
-        fetch(`http://localhost:5000/getEditStudent/${id}`)
+        fetch(`https://powerful-plateau-64861.herokuapp.com/getEditStudent/${id}`)
         .then(res => res.json())
         .then(data => {
             setEditItem(data);
@@ -111,7 +111,7 @@ const Addstudent = () => {
         const id = editItem._id
         delete editItem['_id'];
 
-        fetch(`http://localhost:5000/putEditStudent/${id}`,{
+        fetch(`https://powerful-plateau-64861.herokuapp.com/putEditStudent/${id}`,{
             method: 'PUT',
             headers:{
                 'content-type':'application/json'
@@ -133,14 +133,14 @@ const Addstudent = () => {
     const CheckHandler = (item) => {
         if(studentarray.includes(item))
         {
-            return
+          const indexs = studentarray.indexOf(item)
+          studentarray.splice(indexs, 1)
+          setStudentarray([...studentarray])
         }
         
         else{
             setStudentarray([...studentarray, item])
         }
-    
-        
     }
     const StatusChangeHandler = () => {
         
@@ -162,9 +162,11 @@ const Addstudent = () => {
           setStudentarray([])
       })
     }
+    console.log(studentarray)
     return (
     <Row className='container-fluid'>
            <Col lg={8} className="my-4">
+               <h4 className='text-center fw-bold my-4'>Student List</h4>
            <Table responsive striped bordered hover size="sm">
                 <thead>
                     <tr>
@@ -192,7 +194,7 @@ const Addstudent = () => {
                             <td><button onClick={() => DeleteHanlder(item._id)} className='btn btn-danger text-light fw-bold'>DELETE</button></td>
                             <td><button onClick={() => EditHandler(item._id)} className='btn btn-warning text-dark fw-bold'>EDIT</button></td>
                             <td className='text-center'>
-                                <input onClick={() => CheckHandler(item)} type="checkbox" id="checkbox" value={item} />
+                                <input onClick={() => CheckHandler(item)} type="checkbox" checked={studentarray.includes(item) ? true : false } id="checkbox" value={item} />
                             </td>
                             
                         </tr>)

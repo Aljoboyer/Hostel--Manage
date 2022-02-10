@@ -24,7 +24,7 @@ const Distribution = () => {
     const SubmitHandler  = (e) => {
         e.preventDefault();
         const newdata = {...data, studentId: student.roll, status: 'served'}
-        fetch('http://localhost:5000/foodlistpost',{
+        fetch('https://powerful-plateau-64861.herokuapp.com/foodlistpost',{
             method: 'POST',
             headers: {
                 'content-type':'application/json'
@@ -45,18 +45,18 @@ const Distribution = () => {
         })
     }
     useEffect(() => {
-        fetch('http://localhost:5000/getAllstudent')
+        fetch('https://powerful-plateau-64861.herokuapp.com/getAllstudent')
         .then(res => res.json())
         .then(data => setAllstudent(data))
     }, [student]);
     useEffect(() => {
-        fetch('http://localhost:5000/getfoodList')
+        fetch('https://powerful-plateau-64861.herokuapp.com/getfoodList')
         .then(res => res.json())
         .then(data => setFoodlist(data))
     },[])
     const SerchHandler = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:5000/getSearchStudent/${roll}`)
+        fetch(`https://powerful-plateau-64861.herokuapp.com/getSearchStudent/${roll}`)
         .then(res => res.json())
         .then(data => {
             const sts = allstudent.find(st => st.studentId === data?.roll);
@@ -73,16 +73,18 @@ const Distribution = () => {
     console.log(findstudent)
     return (
         <Row className='container-fluid'>
+            <h3 className='text-success fw-bold text-center mt-3'>Distribution Centre</h3>
             <Col lg={6} className="my-4">
+                <h4 className='text-center fw-bold my-4 '>Search Student For Distribution Food</h4>
             <Form className='p-4' onSubmit={SerchHandler} >
                 <FloatingLabel
                     controlId="floatingInput"
                     label="Entar Student Roll"
                     className="mb-3  fw-bold text-info fs-6"
                     >
-                    <Form.Control name="roll" type="text" onBlur={RollHandler} placeholder="Entar Student Roll" />
+                    <Form.Control className='inputs' name="roll" type="text" onBlur={RollHandler} placeholder="Entar Student Roll" />
                 </FloatingLabel>
-                <button type='submit' className='btn btn-dark text-warning my-4'>Search Student</button>
+                <button type='submit' className='btn btn-dark text-warning my-4'>Search</button>
             </Form>
             {
                 student?.roll ? <div className='mt-4'>
@@ -97,7 +99,7 @@ const Distribution = () => {
             <Col lg={6} className="addfood_colam my-4">
                {
                    findstudent?.studentId ? <>
-                    <h4 className='fw-bold text-primary my-4 ms-4'>Add Food Manu For Student</h4>
+                    <h4 className='fw-bold text-primary my-4 ms-4'>Distribute Food Student</h4>
                 <Form className='p-4' onSubmit={SubmitHandler} >
                     <FloatingLabel
                         controlId="floatingInput"
@@ -120,7 +122,7 @@ const Distribution = () => {
                     <button type='submit' className='btn btn-dark text-warning my-4'>ADD STUDENT</button>
                 </Form>
                    </> : <>
-                   <h4 className='fw-bold text-primary my-4 ms-4'>Add Food Manu For Student</h4>
+                   <h4 className='fw-bold text-primary my-4 ms-4'>Distribute Food Student</h4>
                 <Form className='p-4' onSubmit={SubmitHandler} >
                     <FloatingLabel
                         controlId="floatingInput"
